@@ -29,12 +29,11 @@ public class LorenzWheel extends AbstractWorld {
 	}
 
 	private void drawBuckets(Graphics2D g2d, int bucketCount) {
-		double angle = Math.PI * 2 / bucketCount;
 		for (int i = 0; i < bucketCount; i++) {
 			int blueness = 255 - (int)physics.getBucketFillHeight(i);
 			Color col = new Color(blueness, blueness, 255);
 			g2d.setColor(col);
-			drawBucket(g2d, physics.getWheelAngleRadians() + i * angle);			
+			drawBucket(g2d, physics.getBucketAngle(i) + Math.PI);			
 		}
 	}
 
