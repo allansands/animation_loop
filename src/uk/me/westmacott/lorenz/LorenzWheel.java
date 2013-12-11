@@ -7,7 +7,7 @@ import java.awt.geom.Ellipse2D;
 import uk.me.westmacott.AbstractWorld;
 
 public class LorenzWheel extends AbstractWorld {
-	private static final int BUCKET_COUNT = 7;
+	private static final int BUCKET_COUNT = 9;
 	private static final double WHEEL_RADIUS = 100.0;
 	private static final int CENTREPOINT = 150;
 	

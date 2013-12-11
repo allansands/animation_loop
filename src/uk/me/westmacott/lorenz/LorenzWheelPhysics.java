@@ -5,24 +5,32 @@ public class LorenzWheelPhysics {
 	private final int bucketCount;
 	
 	private double bucketsWeights[];
-	private double bucketsVelocities[];
+	private double wheelVelocity = 0;
 
 	public LorenzWheelPhysics(int bucketCount) {
 		this.bucketCount = bucketCount;
 		bucketsWeights = new double[bucketCount];
 		bucketsWeights[0] = 120.0;
-		bucketsVelocities = new double[bucketCount];
 	}
 
 	public void tick() {
-		double wheelVelocity = 0.0;
 		for (int i = 0; i < bucketCount; i++) {
-			bucketsVelocities[i] += accelerationOfBucket(i);
-			wheelVelocity += bucketsVelocities[i];
+			wheelVelocity += accelerationOfBucket(i);
+			
+			if (Math.abs(getBucketAngle(i)) % (Math.PI * 2) < 1) {
+				bucketsWeights[i] += 3;
+				if (bucketsWeights[i] > 255) {
+					bucketsWeights[i] = 255;
+				}
+			}
+			
+			bucketsWeights[i] -= 0.5;
+			if (bucketsWeights[i] < 0) {
+				bucketsWeights[i] = 0;
+			}
 		}
-		
-	    this.angle = angle + wheelVelocity;
-	    System.out.println(wheelVelocity);
+		wheelVelocity *= 0.99;
+	    this.angle = (angle + wheelVelocity) % (Math.PI * 2);
 	}
 
 	private double accelerationOfBucket(int i) {
@@ -42,7 +50,7 @@ public class LorenzWheelPhysics {
 
 	public double getBucketAngle(int i) {
 		double angleBetweenBuckets = Math.PI * 2 / bucketCount;
-		return angle  + i * angleBetweenBuckets;
+		return angle + i * angleBetweenBuckets;
 	}
 
 }
